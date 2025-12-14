@@ -9,6 +9,7 @@ interface FamilyTreeProps {
   selectedMember: SelectedMember | null;
   onSelectMember: (member: SelectedMember) => void;
   isDarkMode: boolean;
+  svgRef?: React.MutableRefObject<SVGSVGElement | null>;
 }
 
 interface NodePosition {
@@ -36,9 +37,11 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
   selectedMember,
   onSelectMember,
   isDarkMode,
+  svgRef: externalSvgRef,
 }) => {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
+  const internalSvgRef = useRef<SVGSVGElement>(null);
+  const svgRef = externalSvgRef || internalSvgRef;
   const [transform, setTransform] = useState<CanvasTransform>({
     x: 0,
     y: 100,
@@ -253,20 +256,45 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
 
             if (children.length === 0) return null;
 
+            // Calculate parent node radius
+            const parentNameLength = node.member.name.english.length;
+            let parentRadius = NODE_RADIUS;
+            if (parentNameLength <= 8) {
+              parentRadius = 40;
+            } else if (parentNameLength <= 15) {
+              parentRadius = 55;
+            } else if (parentNameLength <= 25) {
+              parentRadius = 70;
+            } else {
+              parentRadius = 85;
+            }
+
             const lineColor = isDarkMode ? '#4b5563' : '#9ca3af';
-            const startY = node.y + NODE_RADIUS;
-            const endY = children[0].y - NODE_RADIUS;
-            const midY = (startY + endY) / 2;
+            const startY = node.y + parentRadius;
+            const midY = node.y + parentRadius + 50;
 
             return (
               <g key={`lines-${node.member.id}`}>
                 {/* Curved line from parent to each child */}
                 {children.map((child) => {
+                  // Calculate child node radius
+                  const childNameLength = child.member.name.english.length;
+                  let childRadius = NODE_RADIUS;
+                  if (childNameLength <= 8) {
+                    childRadius = 40;
+                  } else if (childNameLength <= 15) {
+                    childRadius = 55;
+                  } else if (childNameLength <= 25) {
+                    childRadius = 70;
+                  } else {
+                    childRadius = 85;
+                  }
+
                   // Create a smooth curve from parent to child
                   const x1 = node.x;
                   const y1 = startY;
                   const x2 = child.x;
-                  const y2 = endY;
+                  const y2 = child.y - childRadius;
 
                   // Control points for smooth curve
                   const cpX1 = x1;

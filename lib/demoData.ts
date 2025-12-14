@@ -60,7 +60,73 @@ export const demoFamilyTree: FamilyMember = {
                 birthYear: '2010',
                 location: 'Beirut, Lebanon',
               },
-              children: [],
+              children: [
+                {
+                  id: 'hassan-ali-1',
+                  name: {
+                    english: 'Hassan ibn Ali',
+                    arabic: 'حسن بن علي',
+                  },
+                  color: GENERATION_COLORS.younger,
+                  metadata: {
+                    birthYear: '2032',
+                    location: 'Beirut, Lebanon',
+                  },
+                  children: [],
+                },
+                {
+                  id: 'mohammad-ali-1',
+                  name: {
+                    english: 'Mohammad ibn Ali',
+                    arabic: 'محمد بن علي',
+                  },
+                  color: GENERATION_COLORS.younger,
+                  metadata: {
+                    birthYear: '2034',
+                    location: 'Dubai, UAE',
+                  },
+                  children: [],
+                },
+                {
+                  id: 'ibrahim-ali-1',
+                  name: {
+                    english: 'Ibrahim ibn Ali',
+                    arabic: 'إبراهيم بن علي',
+                  },
+                  color: GENERATION_COLORS.younger,
+                  metadata: {
+                    birthYear: '2036',
+                    location: 'London, UK',
+                  },
+                  children: [],
+                },
+                {
+                  id: 'ahmed-ali-1',
+                  name: {
+                    english: 'Ahmed ibn Ali',
+                    arabic: 'أحمد بن علي',
+                  },
+                  color: GENERATION_COLORS.younger,
+                  metadata: {
+                    birthYear: '2038',
+                    location: 'Toronto, Canada',
+                  },
+                  children: [],
+                },
+                {
+                  id: 'yousuf-ali-1',
+                  name: {
+                    english: 'Yousuf ibn Ali',
+                    arabic: 'يوسف بن علي',
+                  },
+                  color: GENERATION_COLORS.younger,
+                  metadata: {
+                    birthYear: '2040',
+                    location: 'Sydney, Australia',
+                  },
+                  children: [],
+                },
+              ],
             },
 
           ],

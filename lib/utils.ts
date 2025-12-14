@@ -17,6 +17,62 @@ export const exportAsJSON = (familyTree: FamilyMember, fileName: string = 'shajr
 };
 
 /**
+ * Export SVG canvas as PNG image
+ */
+export const exportAsPNG = async (svgElement: SVGSVGElement, fileName: string = 'shajra-family-tree.png'): Promise<void> => {
+  try {
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) throw new Error('Could not get canvas context');
+
+    const img = new Image();
+    const svg = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svg);
+
+    img.onload = () => {
+      // Set canvas size with padding
+      const padding = 40;
+      canvas.width = img.width + padding * 2;
+      canvas.height = img.height + padding * 2;
+
+      // Fill background with white
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the image
+      ctx.drawImage(img, padding, padding);
+
+      // Convert to PNG and download
+      canvas.toBlob((blob) => {
+        if (!blob) throw new Error('Could not create blob');
+        
+        const pngUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = pngUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(pngUrl);
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      throw new Error('Failed to load SVG image');
+    };
+
+    img.src = url;
+  } catch (error) {
+    console.error('Error exporting PNG:', error);
+    alert('Failed to export as PNG. Please try again.');
+  }
+};
+
+/**
  * Import family tree data from JSON file
  */
 export const importFromJSON = (file: File): Promise<FamilyMember> => {

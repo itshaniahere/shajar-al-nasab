@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FamilyTree } from '@/components/FamilyTree';
 import { DetailPanel } from '@/components/DetailPanel';
 import { demoFamilyTree } from '@/lib/demoData';
-import { exportAsJSON, getGenerationStats } from '@/lib/utils';
+import { exportAsJSON, exportAsPNG, getGenerationStats } from '@/lib/utils';
 import { SelectedMember } from '@/types/family';
-import { Sun, Moon, Download, Users } from 'lucide-react';
+import { Sun, Moon, Download, Users, Image } from 'lucide-react';
 
 export default function Home() {
+  const svgRef = useRef<SVGSVGElement>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedMember, setSelectedMember] = useState<SelectedMember | null>(null);
   const [showStats, setShowStats] = useState(false);
@@ -31,6 +32,13 @@ export default function Home() {
   const handleExport = () => {
     const timestamp = new Date().toISOString().split('T')[0];
     exportAsJSON(demoFamilyTree, `shajra-family-tree-${timestamp}.json`);
+  };
+
+  const handleExportPNG = () => {
+    if (svgRef.current) {
+      const timestamp = new Date().toISOString().split('T')[0];
+      exportAsPNG(svgRef.current, `shajra-family-tree-${timestamp}.png`);
+    }
   };
 
   const stats = getGenerationStats(demoFamilyTree);
@@ -67,7 +75,22 @@ export default function Home() {
             <span className="text-sm font-medium">Stats</span>
           </button>
 
-          {/* Export button */}
+          {/* Export as PNG button */}
+          <button
+            onClick={handleExportPNG}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+              isDarkMode
+                ? 'hover:bg-gray-700 text-gray-300'
+                : 'hover:bg-gray-100 text-gray-700'
+            }`}
+            title="Export family tree as PNG image"
+            aria-label="Export as PNG"
+          >
+            <Image size={20} />
+            <span className="text-sm font-medium">PNG</span>
+          </button>
+
+          {/* Export as JSON button */}
           <button
             onClick={handleExport}
             className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
@@ -79,7 +102,7 @@ export default function Home() {
             aria-label="Export as JSON"
           >
             <Download size={20} />
-            <span className="text-sm font-medium">Export</span>
+            <span className="text-sm font-medium">JSON</span>
           </button>
 
           {/* Theme toggle */}
@@ -121,6 +144,7 @@ export default function Home() {
             selectedMember={selectedMember}
             onSelectMember={setSelectedMember}
             isDarkMode={isDarkMode}
+            svgRef={svgRef}
           />
         </div>
 
