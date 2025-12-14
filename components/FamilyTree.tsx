@@ -269,7 +269,7 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
               parentRadius = 85;
             }
 
-            const lineColor = isDarkMode ? '#4b5563' : '#9ca3af';
+            const lineColor = isDarkMode ? '#ffffff' : '#000000';
             const startY = node.y + parentRadius;
             const midY = node.y + parentRadius + 50;
 
@@ -360,19 +360,15 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
                 onClick={() => handleNodeClick(node)}
                 style={{ cursor: 'pointer' }}
               >
-                {/* Node circle with dynamic radius */}
+                {/* Node circle with theme-aware colors */}
                 <circle
                   cx={node.x}
                   cy={node.y}
                   r={dynamicRadius}
-                  fill={node.member.color || (isDarkMode ? '#4b5563' : '#9ca3af')}
-                  stroke={
-                    isSelected
-                      ? isDarkMode ? '#fbbf24' : '#f59e0b'
-                      : isDarkMode ? '#2d5a52' : '#a8d5ba'
-                  }
+                  fill={isDarkMode ? '#1f2937' : '#ffffff'}
+                  stroke={isDarkMode ? '#ffffff' : '#000000'}
                   strokeWidth={isSelected ? 4 : 2}
-                  opacity={0.85}
+                  opacity={0.95}
                   className="hover:opacity-100 transition-opacity"
                 />
 
@@ -391,14 +387,10 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
                       dominantBaseline="middle"
                       fontSize="13"
                       fontFamily="sans-serif"
-                      fill={isDarkMode ? '#ffffff' : '#ffffff'}
+                      fill={isDarkMode ? '#ffffff' : '#000000'}
                       fontWeight="700"
                       letterSpacing="-0.3"
                       pointerEvents="none"
-                      style={{ paintOrder: 'stroke', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
-                      stroke={node.member.color || (isDarkMode ? '#4b5563' : '#9ca3af')}
-                      strokeWidth="0.3"
-                      strokeOpacity="0.4"
                     >
                       {line}
                     </text>
