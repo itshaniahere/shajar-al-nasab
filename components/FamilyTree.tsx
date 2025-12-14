@@ -42,7 +42,7 @@ export const FamilyTree: React.FC<FamilyTreeProps> = ({
   const [transform, setTransform] = useState<CanvasTransform>({
     x: 0,
     y: 100,
-    scale: 1,
+    scale: 2,
   });
   const [nodes, setNodes] = useState<NodePosition[]>([]);
   const [isPanning, setIsPanning] = useState(false);
