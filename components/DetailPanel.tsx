@@ -131,7 +131,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
         )}
       </div>
 
-      {/* Footer info */}
+      {/* Footer info  */}
       <div className={`p-4 border-t ${isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-gray-50'}`}>
         <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>
           Click another family member to update details
