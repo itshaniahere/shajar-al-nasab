@@ -108,20 +108,6 @@ export default function Home() {
                 {stats.totalMembers}
               </p>
             </div>
-            <div>
-              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Generations</p>
-              <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                {stats.maxGeneration + 1}
-              </p>
-            </div>
-            <div>
-              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Generation Breakdown</p>
-              <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                {Object.entries(stats.generations)
-                  .map(([gen, count]) => `Gen ${gen}: ${count}`)
-                  .join(' • ')}
-              </p>
-            </div>
           </div>
         </div>
       )}
