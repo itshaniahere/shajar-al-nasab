@@ -57,21 +57,13 @@ export const getAllMembers = (root: FamilyMember): FamilyMember[] => {
 };
 
 /**
- * Get generation statistics
+ * Get family statistics
  */
 export const getGenerationStats = (root: FamilyMember) => {
   const members = getAllMembers(root);
-  const generations = new Map<number, number>();
-
-  members.forEach((member) => {
-    const gen = member.metadata?.generation || 0;
-    generations.set(gen, (generations.get(gen) || 0) + 1);
-  });
 
   return {
     totalMembers: members.length,
-    generations: Object.fromEntries(generations),
-    maxGeneration: Math.max(...Array.from(generations.keys())),
   };
 };
 
@@ -85,7 +77,6 @@ export const searchMembers = (root: FamilyMember, query: string): FamilyMember[]
   return members.filter(
     (member) =>
       member.name.english.toLowerCase().includes(lowerQuery) ||
-      member.name.arabic?.toLowerCase().includes(lowerQuery) ||
-      member.title.toLowerCase().includes(lowerQuery)
+      member.name.arabic?.toLowerCase().includes(lowerQuery)
   );
 };

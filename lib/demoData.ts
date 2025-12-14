@@ -1,4 +1,4 @@
-import { FamilyMember } from './family';
+import { FamilyMember } from '@/types/family';
 
 // Color palette for generations - warm, traditional colors
 const GENERATION_COLORS = {
